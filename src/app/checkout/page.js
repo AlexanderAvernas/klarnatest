@@ -13,7 +13,7 @@ const CheckoutPage = () => {
             body: JSON.stringify({
                 purchase_country: 'US',
                 purchase_currency: 'USD',
-                locale: 'en-US',
+                locale: 'sv-SE',
                 order_amount: 10000,
                 order_tax_amount: 2000,
                 order_lines: [
@@ -30,10 +30,10 @@ const CheckoutPage = () => {
                     }
                 ],
                 merchant_urls: {
-                    terms: 'https://your-site.com/terms',
-                    checkout: 'https://your-site.com/checkout',
-                    confirmation: 'https://your-site.com/confirmation',
-                    push: 'https://your-site.com/api/push'
+                    terms: 'https://klarnatest.netlify.app/terms',
+                    checkout: 'https://klarnatest.netlify.app/checkout',
+                    confirmation: 'https://klarnatest.netlify.app/confirmation',
+                    push: 'https://klarnatest.netlify.app/api/push'
                 }
             })
         })
