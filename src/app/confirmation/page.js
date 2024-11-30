@@ -1,4 +1,4 @@
-// /app/confirmation/page.js (or /pages/confirmation.js if using Pages Directory)
+'use client';
 
 import { useEffect, useState } from 'react';
 
