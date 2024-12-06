@@ -1,4 +1,4 @@
-import { getKlarnaOrder } from '../../utils/klarnaApi';
+import { getKlarnaOrder } from '../../../utils/klarnaApi';
 
 export async function GET(req, { params }) {
   const { orderId } = params;
