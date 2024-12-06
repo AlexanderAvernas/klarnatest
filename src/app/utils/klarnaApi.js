@@ -22,13 +22,30 @@ export const createKlarnaOrder = async (orderDetails) => {
   }
 };
 
-// Fetch Klarna order details by order ID
+// // Fetch Klarna order details by order ID
+// export const getKlarnaOrder = async (orderId) => {
+//     try {
+//       const response = await klarnaApi.get(`/checkout/v3/orders/${orderId}`);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error fetching Klarna order:', error.response?.data || error.message);
+//       throw error;
+//     }
+//   };
+
+
+// Fetch Klarna order details by order ID using Order Management API
 export const getKlarnaOrder = async (orderId) => {
-    try {
-      const response = await klarnaApi.get(`/checkout/v3/orders/${orderId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching Klarna order:', error.response?.data || error.message);
-      throw error;
-    }
-  };
+  try {
+    const response = await axios.get(`https://api.klarna.com/ordermanagement/v1/orders/${orderId}`, {
+      headers: {
+        Authorization: `Basic ${Buffer.from(process.env.KLARNA_API_KEY).toString('base64')}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Klarna order:', error.response?.data || error.message);
+    throw error;
+  }
+};
