@@ -21,3 +21,14 @@ export const createKlarnaOrder = async (orderDetails) => {
     throw error;
   }
 };
+
+// Fetch Klarna order details by order ID
+export const getKlarnaOrder = async (orderId) => {
+    try {
+      const response = await klarnaApi.get(`/checkout/v3/orders/${orderId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching Klarna order:', error.response?.data || error.message);
+      throw error;
+    }
+  };

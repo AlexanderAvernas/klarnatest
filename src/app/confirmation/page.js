@@ -4,30 +4,39 @@ import { useEffect, useState } from 'react';
 
 const ConfirmationPage = () => {
   const [orderStatus, setOrderStatus] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Retrieve the Klarna order ID or other relevant data from query params or session
     const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id'); // This could be in the URL as a query parameter
+    const orderId = urlParams.get('order_id'); // Klarna skickar 'order_id' i URL:en
 
     if (orderId) {
-      // Fetch the order details (e.g., from your backend or Klarna API)
       fetch(`/api/get-order/${orderId}`)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) throw new Error('Failed to fetch order details');
+          return response.json();
+        })
         .then((data) => setOrderStatus(data))
-        .catch((error) => console.error('Error fetching order details:', error));
+        .catch((err) => {
+          console.error('Error fetching order details:', err);
+          setError('Failed to retrieve order details.');
+        });
+    } else {
+      setError('Order ID is missing in the URL.');
     }
   }, []);
 
   return (
     <div>
       <h1>Order Confirmation</h1>
-      {orderStatus ? (
+      {error ? (
+        <p>Error: {error}</p>
+      ) : orderStatus ? (
         <div>
           <h2>Thank you for your purchase!</h2>
           <p>Order ID: {orderStatus.id}</p>
           <p>Status: {orderStatus.status}</p>
-          {/* You can display more details like items purchased, total price, etc. */}
+          {/* Display additional details like items and prices */}
         </div>
       ) : (
         <p>Loading your order status...</p>

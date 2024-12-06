@@ -1,11 +1,10 @@
-import { createKlarnaOrder } from '../../utils/klarnaApi'; // Your Klarna API utility
+import { getKlarnaOrder } from '../../utils/klarnaApi';
 
-// API to get Klarna order details by order ID
 export async function GET(req, { params }) {
   const { orderId } = params;
 
   try {
-    const orderDetails = await createKlarnaOrder(orderId); // Use your Klarna API function to fetch order details
+    const orderDetails = await getKlarnaOrder(orderId); // Fetch order details from Klarna
     return new Response(JSON.stringify(orderDetails), { status: 200 });
   } catch (error) {
     console.error('Error fetching Klarna order:', error);
