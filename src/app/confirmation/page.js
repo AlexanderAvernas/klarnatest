@@ -10,6 +10,7 @@ const ConfirmationPage = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get('order_id'); // Klarna sends 'order_id' in the URL
+    console.log('Order ID:', orderId); // Log Order ID
 
     if (orderId) {
       // Fetch order details from your backend
@@ -18,9 +19,12 @@ const ConfirmationPage = () => {
           if (!response.ok) throw new Error('Failed to fetch order details');
           return response.json();
         })
-        .then((data) => setOrderStatus(data))
+        .then((data) => {
+          console.log('Order details response:', data); // Log order details
+          setOrderStatus(data);
+        })
         .catch((err) => {
-          console.error('Error fetching order details:', err);
+          console.error('Error fetching order details:', err); // Log the error
           setError('Failed to retrieve order details.');
         });
 
@@ -33,6 +37,7 @@ const ConfirmationPage = () => {
         },
       });
     } else {
+      console.error('Order ID is missing in the URL.'); // Log missing order ID
       setError('Order ID is missing in the URL.');
     }
   }, []);
@@ -47,7 +52,7 @@ const ConfirmationPage = () => {
       ) : orderStatus ? (
         <div>
           <h2>Thank you for your purchase!</h2>
-          <p>Order ID: {orderStatus.id}</p>
+          <p>Order ID: {orderStatus.order_id}</p>
           <p>Status: {orderStatus.status}</p>
           {/* Display additional details like items and prices */}
         </div>
