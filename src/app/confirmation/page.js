@@ -9,35 +9,40 @@ const ConfirmationPage = () => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id'); // Klarna sends 'order_id' in the URL
-    console.log('Order ID:', orderId); // Log Order ID
+    const orderId = urlParams.get('order_id');
+    console.log('Order ID:', orderId); // Första loggen: Ser vi rätt orderId?
 
     if (orderId) {
-      // Fetch order details from your backend
+      // Fetch order details
       fetch(`/api/get-order/${orderId}`)
         .then((response) => {
-          if (!response.ok) throw new Error('Failed to fetch order details');
+          console.log('Fetch response:', response); // Loggar hela responsobjektet
+          if (!response.ok) throw new Error(`API error: ${response.statusText}`);
           return response.json();
         })
         .then((data) => {
-          console.log('Order details response:', data); // Log order details
+          console.log('Order details response:', data); // Loggar hämtade orderdetaljer
           setOrderStatus(data);
         })
         .catch((err) => {
-          console.error('Error fetching order details:', err); // Log the error
+          console.error('Error fetching order details:', err); // Loggar felet
           setError('Failed to retrieve order details.');
         });
 
-      // Load the Klarna Confirmation Widget
+      // Klarna Confirmation Widget
       window.Klarna?.Payments?.load({
         container: '#klarna-confirmation-container',
         instance_id: 'klarna-confirmation',
         options: {
           order_id: orderId,
         },
+      }).then(() => {
+        console.log('Klarna Confirmation Widget loaded successfully.');
+      }).catch((err) => {
+        console.error('Error loading Klarna Confirmation Widget:', err);
       });
     } else {
-      console.error('Order ID is missing in the URL.'); // Log missing order ID
+      console.error('Order ID is missing in the URL.');
       setError('Order ID is missing in the URL.');
     }
   }, []);
@@ -54,13 +59,11 @@ const ConfirmationPage = () => {
           <h2>Thank you for your purchase!</h2>
           <p>Order ID: {orderStatus.order_id}</p>
           <p>Status: {orderStatus.status}</p>
-          {/* Display additional details like items and prices */}
         </div>
       ) : (
         <p>Loading your order status...</p>
       )}
 
-      {/* Klarna Confirmation Widget container */}
       <div id="klarna-confirmation-container" style={{ marginTop: '20px' }}></div>
     </div>
   );
