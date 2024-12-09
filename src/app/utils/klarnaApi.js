@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Configure Klarna API instance
 const klarnaApi = axios.create({
   baseURL: 'https://api.playground.klarna.com', // Klarna Test API endpoint
   auth: {
@@ -24,23 +25,23 @@ export const createKlarnaOrder = async (orderDetails) => {
 
 // Fetch Klarna order details by order ID
 export const getKlarnaOrder = async (orderId) => {
-    try {
-      const response = await klarnaApi.get(`/checkout/v3/orders/${orderId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching Klarna order:', error.response?.data || error.message);
-      throw error;
-    }
-  };
+  try {
+    const response = await klarnaApi.get(`/checkout/v3/orders/${orderId}`);
+    // This should return the `html_snippet` in addition to other details
+    return response.data; // Includes `html_snippet`, `status`, etc.
+  } catch (error) {
+    console.error('Error fetching Klarna order:', error.response?.data || error.message);
+    throw error;
+  }
+};
 
-  // Fetch Klarna order details from Order Management API
+// Fetch Klarna order details from Order Management API
 export const getKlarnaOrderManagement = async (orderId) => {
-    try {
-      const response = await klarnaApi.get(`/ordermanagement/v1/orders/${orderId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching order from Order Management API:', error.response?.data || error.message);
-      throw error;
-    }
-  };
-
+  try {
+    const response = await klarnaApi.get(`/ordermanagement/v1/orders/${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching order from Order Management API:', error.response?.data || error.message);
+    throw error;
+  }
+};
