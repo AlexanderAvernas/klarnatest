@@ -34,14 +34,3 @@ export const getKlarnaOrder = async (orderId) => {
     throw error;
   }
 };
-
-// Fetch Klarna order details from Order Management API
-export const getKlarnaOrderManagement = async (orderId) => {
-  try {
-    const response = await klarnaApi.get(`/ordermanagement/v1/orders/${orderId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching order from Order Management API:', error.response?.data || error.message);
-    throw error;
-  }
-};
