@@ -75,7 +75,7 @@
 //     }
 // }
 
-import { getKlarnaOrder } from './klarnaApi'; // Importera din axios-baserade funktion för att hämta Klarna order
+import { getKlarnaOrder } from '../../utils/klarnaApi'; // Importera din axios-baserade funktion för att hämta Klarna order
 
 export async function POST(req) {
     try {
@@ -150,4 +150,3 @@ export async function POST(req) {
         );
     }
 }
-

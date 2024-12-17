@@ -35,7 +35,7 @@ const CheckoutPage = () => {
             terms: 'https://klarnatest.netlify.app/terms', // Terms and conditions URL
             checkout: 'https://klarnatest.netlify.app/checkout', // Checkout URL
             confirmation: 'https://klarnatest.netlify.app/confirmation?order_id={checkout.order.id}', // Dynamic Confirmation URL
-            push: 'https://webhook.site/06bd1065-15cc-45dd-8317-1219f713092e?order_id={checkout.order.id}' // push with id
+            push: 'https://klarnatest.netlify.app/api/push?order_id={checkout.order.id}' // push with id
           },
         }),
       });
