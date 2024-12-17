@@ -85,7 +85,7 @@ export async function POST(req) {
 
         // Hämta query-parametrar
         const { searchParams } = new URL(req.url);
-        const orderId = searchParams.get('klarna_order_id'); // Hämta order_id från query-parametern
+        const orderId = searchParams.get('order_id'); // Hämta order_id från query-parametern
 
         // Kontrollera om order_id finns
         if (!orderId) {
