@@ -125,6 +125,7 @@ export async function POST(req) {
                 // Här kan du logga eller hantera orderdetaljer som hämtats från Klarna
                 console.log(`Order ID: ${orderId}`);
                 console.log(`Order Status: ${orderDetails.status}`); // Logga status från Klarna
+
                 // Exempel på att logga shipping information
                 if (orderDetails.shipping_address) {
                     console.log(`Shipping Address: ${orderDetails.shipping_address.street_address}`);
@@ -139,9 +140,6 @@ export async function POST(req) {
                 });
 
                 console.log('Notifieringsmail skickat.');
-                // Skapa order i din egen databas eller system
-                // Skicka acknowledgment till Klarna om ordern ska bekräftas.
-                // await acknowledgeOrder(orderId); // Implementera denna funktion om du vill acknokera ordern till Klarna
             } catch (error) {
                 console.error('Fel vid bearbetning av order:', error);
             }
@@ -160,3 +158,4 @@ export async function POST(req) {
         );
     }
 }
+
